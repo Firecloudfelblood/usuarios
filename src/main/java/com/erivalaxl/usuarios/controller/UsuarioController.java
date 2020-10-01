@@ -40,4 +40,20 @@ public class UsuarioController {
         Usuarios usuarioCreado = usuariosRepository.save(usuario);
         return new ResponseEntity<Usuarios>(usuarioCreado, HttpStatus.ACCEPTED);
     }
+
+    @RequestMapping(method = RequestMethod.DELETE, path = "/usuarios/borrar/{id}")
+    public ResponseEntity<List<Usuarios>> borrarUsuario(@PathVariable Integer id){
+       Long well = UsuariosRepository.deleteById(id);
+
+        return consultarUsuarios();
+    }
+
+    @PutMapping("/usuario/actualizar/{id}")
+    public ResponseEntity<List<Usuarios>> actualizarUsuario(@PathVariable Integer id, @RequestBody Usuarios usuario){
+        System.out.println("Actualizando el usuario id: " + id);
+        usuario.setId(id);
+        usuariosRepository.save(usuario);
+
+        return consultarUsuarios();
+    }
 }
