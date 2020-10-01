@@ -5,9 +5,7 @@ import com.erivalaxl.usuarios.persistence.UsuariosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLDataException;
 import java.util.List;
@@ -32,8 +30,14 @@ public class UsuarioController {
     }
 
     @GetMapping("/usuarios/{id}")
-    public ResponseEntity<List<Usuarios>> consultaPorId(@RequestParam int id){
+    public ResponseEntity<List<Usuarios>> consultaPorId(@PathVariable int id){
         List<Usuarios> usuarios = usuariosRepository.findById(id);
         return new ResponseEntity<List<Usuarios>>(usuarios, HttpStatus.OK);
+    }
+    @PostMapping("/usuarios/crear")
+    public ResponseEntity<Usuarios> crearUsuario(@RequestBody Usuarios usuario){
+       // System.out.println(usuario.getApeido());
+        Usuarios usuarioCreado = usuariosRepository.save(usuario);
+        return new ResponseEntity<Usuarios>(usuarioCreado, HttpStatus.ACCEPTED);
     }
 }
