@@ -41,10 +41,9 @@ public class UsuarioController {
         return new ResponseEntity<Usuarios>(usuarioCreado, HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, path = "/usuarios/borrar/{id}")
+    @DeleteMapping( "/usuarios/borrar/{id}")
     public ResponseEntity<List<Usuarios>> borrarUsuario(@PathVariable Integer id){
-       Long well = UsuariosRepository.deleteById(id);
-
+        usuariosRepository.deleteById(id);
         return consultarUsuarios();
     }
 
